@@ -1,0 +1,33 @@
+# Ignore build outputs
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio folder
+.vs/
+
+# Logs
+*.log
+
+# OS-generated files
+Thumbs.db
+.DS_Store
+
+# Rider/JetBrains IDE
+.idea/
+
+# VS Code
+.vscode/
+
+# Dependency packages
+packages/
+*.nupkg
+
+# Others
+*.db
+*.sqlite
