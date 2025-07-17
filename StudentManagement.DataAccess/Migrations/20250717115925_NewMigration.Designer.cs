@@ -12,8 +12,8 @@ using StudentManagement.DataAccess.Data;
 namespace StudentManagement.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250716151112_Roles")]
-    partial class Roles
+    [Migration("20250717115925_NewMigration")]
+    partial class NewMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -74,6 +74,36 @@ namespace StudentManagement.DataAccess.Migrations
                     b.HasIndex("InstructorId");
 
                     b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("StudentManagement.Application.Entities.ExamResult", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Grade")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Marks")
+                        .HasColumnType("float");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("ExamResult");
                 });
 
             modelBuilder.Entity("StudentManagement.Application.Entities.Instructor", b =>
@@ -226,6 +256,25 @@ namespace StudentManagement.DataAccess.Migrations
                         .HasForeignKey("InstructorId");
 
                     b.Navigation("Instructor");
+                });
+
+            modelBuilder.Entity("StudentManagement.Application.Entities.ExamResult", b =>
+                {
+                    b.HasOne("StudentManagement.Application.Entities.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("StudentManagement.Application.Entities.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("StudentManagement.Application.Entities.Student", b =>

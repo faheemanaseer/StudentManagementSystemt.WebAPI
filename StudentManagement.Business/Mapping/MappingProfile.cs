@@ -34,6 +34,13 @@ namespace StudentManagement.Business.Mapping
 
           
             CreateMap<StudentCourse, StudentCourse>().ReverseMap();
+
+
+            CreateMap<CreateExamResultDto, ExamResult>().ReverseMap();
+            CreateMap<ExamResult, ExamResultDto>()
+                .ForMember(dest => dest.StudentName, opt => opt.MapFrom(src => src.Student.Name))
+                .ForMember(dest => dest.CourseName, opt => opt.MapFrom(src => src.Course.Title))
+                .ReverseMap();
         }
     }
 
