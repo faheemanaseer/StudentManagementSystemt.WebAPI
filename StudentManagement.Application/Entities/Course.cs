@@ -14,7 +14,7 @@ namespace StudentManagement.Application.Entities
         public int SId { get; set; }
         [Required]
         public string Title { get; set; }
-        [ValidateNever]
+       [ValidateNever]
         public ICollection<StudentCourse> StudentCourses { get; set; }
         public int? InstructorId { get; set; }
         public Instructor Instructor { get; set; }

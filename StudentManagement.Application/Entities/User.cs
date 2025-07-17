@@ -11,7 +11,7 @@ namespace StudentManagement.Application.Entities
     public class User
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        
         public int Id { get; set; }
 
         [Required, EmailAddress]
@@ -23,7 +23,7 @@ namespace StudentManagement.Application.Entities
         [Required]
         public string Name { get; set; }
 
-        public int RoleId { get; set; }
+        public int? RoleId { get; set; }
         public Role Role { get; set; }
 
 

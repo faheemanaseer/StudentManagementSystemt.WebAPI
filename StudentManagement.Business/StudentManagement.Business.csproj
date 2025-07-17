@@ -24,10 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\" />
-    <Folder Include="Interfaces\" />
-    <Folder Include="Mapping\" />
-    <Folder Include="Services\" />
+    <ProjectReference Include="..\StudentManagement.Application\StudentManagement.Application.csproj" />
+    <ProjectReference Include="..\StudentManagement.DataAccess\StudentManagement.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>
