@@ -17,7 +17,6 @@ namespace StudentManagement.WebApi.Controllers
         {
             _studentService = studentService;
         }
-
         [HttpGet("profile")]
         public async Task<IActionResult> GetProfile()
         {
@@ -30,8 +29,6 @@ namespace StudentManagement.WebApi.Controllers
 
             return Ok(dto);
         }
-
-        [AllowAnonymous]
         [HttpPost("profile")]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> CreateProfile([FromForm] StudentDto dto)
@@ -98,8 +95,6 @@ namespace StudentManagement.WebApi.Controllers
             var courses = await _studentService.GetEnrolledCoursesAsync(userId);
             return Ok(courses);
         }
-
-        
         private bool TryGetUserId(out int userId)
         {
             userId = 0;

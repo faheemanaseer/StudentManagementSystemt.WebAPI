@@ -13,8 +13,7 @@ namespace StudentManagement.Business.Interfaces
         Task<bool> IsAlreadyEnrolledAsync(int studentId, int courseId);
 
         Task<List<CourseDto>> GetAllCoursesAsync();
-        Task<List<StudentDto>> GetAllStudentsAsync();
-
+        Task<List<StudentWithCoursesDto>> GetAllStudentsAsync();
         Task<List<CourseDto>> GetAssignedCoursesAsync(int studentId);
     }
 }

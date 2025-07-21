@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace StudentManagement.Entities.DTOs
+namespace StudentManagement.Business.DTOs
 {
     public class RegisterDto
     {

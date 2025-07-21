@@ -32,7 +32,6 @@ namespace StudentManagement.Business.Services
                 Directory.CreateDirectory(_ImageFolderPath);
             }
         }
-
         public async Task<StudentDto> GetProfileAsync(int userId)
         {
             var student = await _studentRepo.GetByUserIdAsync(userId);
@@ -41,7 +40,6 @@ namespace StudentManagement.Business.Services
 
             return _mapper.Map<StudentDto>(student);
         }
-
         public async Task CreateProfileAsync(StudentDto dto, int userId)
         {
             if(dto.CardImage  == null)
@@ -53,7 +51,6 @@ namespace StudentManagement.Business.Services
             var student = _mapper.Map<Student>(dto);
             student.UserId = userId;
             student.Email = dto.Email;
-
             if (string.IsNullOrEmpty(student.Email))
                 throw new ArgumentException("Email must not be null");
 
@@ -124,7 +121,6 @@ namespace StudentManagement.Business.Services
                 InstructorName = c.Instructor != null ? c.Instructor.Name : "Not Assigned"
             }).ToList();
         }
-
         public async Task AssignCourseToStudentAsync(int studentId, int courseId)
         {
             var existing = await _studentCourseRepo.GetByStudentAndCourseAsync(studentId, courseId);
@@ -136,7 +132,7 @@ namespace StudentManagement.Business.Services
                 CourseId = courseId
             };
 
-            await _studentCourseRepo.AddAsync(newAssignment);
+           await _studentCourseRepo.AddAsync(newAssignment);
         }
         public async Task<List<StudentDto>> SearchByNameAsync(string name)
         {

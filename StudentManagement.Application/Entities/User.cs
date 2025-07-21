@@ -11,7 +11,6 @@ namespace StudentManagement.Application.Entities
     public class User
     {
         [Key]
-        
         public int Id { get; set; }
 
         [Required, EmailAddress]

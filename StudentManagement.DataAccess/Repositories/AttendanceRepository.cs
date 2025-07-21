@@ -24,7 +24,6 @@ namespace StudentManagement.DataAccess.Repositories
                 .Where(a => a.CourseId == courseId && a.Date == date)
                 .ToListAsync();
         }
-
         public async Task AddRangeAsync(List<Attendance> attendances)
         {
             _context.Attendances.AddRange(attendances);
@@ -38,13 +37,11 @@ namespace StudentManagement.DataAccess.Repositories
                     a.Date.Date == date.Date &&
                     a.StudentId == studentId);
         }
-
         public async Task AddAsync(Attendance attendance)
         {
             await _context.Attendances.AddAsync(attendance);
             await _context.SaveChangesAsync();
         }
-
         public async Task UpdateAsync(Attendance attendance)
         {
             _context.Attendances.Update(attendance);
@@ -58,8 +55,5 @@ namespace StudentManagement.DataAccess.Repositories
             _context.Attendances.RemoveRange(records);
             await _context.SaveChangesAsync();
         }
-
-
-
     }
 }
