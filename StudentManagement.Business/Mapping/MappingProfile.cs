@@ -13,13 +13,11 @@ namespace StudentManagement.Business.Mapping
     {
         public MappingProfile()
         {
-           
+
             CreateMap<Student, StudentDto>()
                 .ForMember(dest => dest.EnrolledCourses,
                     opt => opt.MapFrom(src => src.StudentCourses.Select(sc => sc.Course)))
-                .ForMember(dest => dest.CardImage, opt => opt.Ignore())
-                .ForMember(dest => dest.CardImagePath, opt => opt.MapFrom(src => src.CardImagePath));
-                    opt => opt.MapFrom(src => src.StudentCourses.Select(sc => sc.Course)));
+                .ForMember(dest => dest.CardImage, opt => opt.Ignore());
             CreateMap<RegisterDto, User>();
 
 
