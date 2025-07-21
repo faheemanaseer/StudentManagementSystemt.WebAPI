@@ -15,5 +15,7 @@ namespace StudentManagement.Business.Interfaces
         Task<List<CourseDto>> GetEnrolledCoursesAsync(int userId);
         Task<List<StudentDto>> SearchByNameAsync(string name);
 
+        Task<(byte[] fileBytes, string contentType)?> GetCardImageAsync(int userId);
+
     }
 }
