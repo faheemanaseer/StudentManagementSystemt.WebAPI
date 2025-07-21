@@ -28,27 +28,22 @@ namespace StudentManagement.Business.Services
             _mapper = mapper;
             _instructorRepo = instructorRepo;
         }
-
         public async Task<List<CourseDto>> GetAllAsync()
         {
             var courses = await _courseRepo.GetAllAsync();
             return _mapper.Map<List<CourseDto>>(courses);
         }
-
         public async Task<CourseDto> GetByIdAsync(int id)
         {
             var c = await _courseRepo.GetByIdAsync(id);
             return _mapper.Map<CourseDto>(c);
         }
-
         public async Task AddAsync(CourseDto dto)
         {
             var course = _mapper.Map<Course>(dto);
-            course.Instructor = null; 
-            course.InstructorId = null;
+          
             await _courseRepo.AddAsync(course);
         }
-
         public async Task UpdateAsync(CourseDto dto)
         {
             var course = await _courseRepo.GetByIdAsync(dto.SId);
@@ -58,7 +53,6 @@ namespace StudentManagement.Business.Services
 
             await _courseRepo.UpdateAsync(course);
         }
-
         public async Task DeleteAsync(int id)
         {
             var course = await _courseRepo.GetByIdAsync(id);
@@ -73,7 +67,6 @@ namespace StudentManagement.Business.Services
                 Text = s.Name
             }).ToList();
         }
-
         public async Task<List<SelectListItem>> GetAllCoursesAsync()
         {
             var courses = await _courseRepo.GetAllAsync();
@@ -84,7 +77,6 @@ namespace StudentManagement.Business.Services
 
             }).ToList();
         }
-
         public async Task AssignCourseAsync(int studentId, int courseId)
         {
             var assignment = new StudentCourse
@@ -115,12 +107,9 @@ namespace StudentManagement.Business.Services
 
             return result;
         }
-
-
         public async Task<List<Instructor>> GetAllInstructorsAsync()
         {
             return await _instructorRepo.GetAllAsync();
         }
-
     }
 }

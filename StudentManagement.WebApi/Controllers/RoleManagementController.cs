@@ -14,12 +14,10 @@ namespace StudentManagement.WebApi.Controllers
     public class RoleManagementController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-
         public RoleManagementController(ApplicationDbContext context)
         {
             _context = context;
         }
-
         [HttpGet("users-roles")]
         public async Task<ActionResult<RoleAssignViewModel>> GetUsersWithRoles()
         {
@@ -34,31 +32,27 @@ namespace StudentManagement.WebApi.Controllers
                 Roles = roles
             });
         }
-
         [HttpPost("assign")]
-        public async Task<IActionResult> AssignRole([FromBody] AssignRoleDto request)
+        public async Task<IActionResult> AssignRole([FromBody] AssignRoleDto dto)
         {
-            var user = await _context.Users.FindAsync(request.UserId);
+            var user = await _context.Users.FindAsync(dto.UserId);
             if (user == null)
                 return NotFound(new { message = "User not found." });
 
-            var role = await _context.Roles.FindAsync(request.RoleId);
+            var role = await _context.Roles.FindAsync(dto.RoleId);
             if (role == null)
                 return BadRequest(new { message = "Invalid RoleId." });
 
-            user.RoleId = request.RoleId;
+            user.RoleId = dto.RoleId;
             await _context.SaveChangesAsync();
 
             return Ok(new { message = "Role assigned successfully." });
         }
-
-        
         public class RoleAssignViewModel
         {
             public List<User> Users { get; set; }
             public List<Role> Roles { get; set; }
         }
-
         public class AssignRoleDto
         {
             public int UserId { get; set; }

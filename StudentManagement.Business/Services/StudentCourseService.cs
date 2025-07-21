@@ -22,7 +22,6 @@ namespace StudentManagement.Business.Services
             _context = context;
             _mapper = mapper;
         }
-
         public async Task AssignCourseAsync(int studentId, int courseId)
         {
             try
@@ -50,13 +49,10 @@ namespace StudentManagement.Business.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ AssignCourseAsync failed: {ex.Message}");
+                Console.WriteLine($"AssignCourseAsync failed: {ex.Message}");
                 throw;
             }
         }
-
-
-
         public async Task<bool> IsAlreadyEnrolledAsync(int studentId, int courseId)
         {
             return await _context.StudentCourses
@@ -70,10 +66,14 @@ namespace StudentManagement.Business.Services
 
         }
 
-        public async Task<List<StudentDto>> GetAllStudentsAsync()
+        public async Task<List<StudentWithCoursesDto>> GetAllStudentsAsync()
         {
-            var students = await _context.Students.ToListAsync();
-            return _mapper.Map<List<StudentDto>>(students);
+            var students = await _context.Students
+                .Include(s => s.StudentCourses)
+                    .ThenInclude(sc => sc.Course)
+                .ToListAsync();
+
+            return _mapper.Map<List<StudentWithCoursesDto>>(students);
         }
 
         public async Task<List<CourseDto>> GetAssignedCoursesAsync(int studentId)

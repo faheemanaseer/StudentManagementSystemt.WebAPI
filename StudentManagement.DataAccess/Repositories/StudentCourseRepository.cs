@@ -18,13 +18,11 @@ namespace StudentManagement.DataAccess.Repositories
         {
             _context = context;
         }
-
         public async Task AddAsync(StudentCourse studentCourse)
         {
             _context.StudentCourses.Add(studentCourse);
             await _context.SaveChangesAsync();
         }
-
         public async Task<List<StudentCourse>> GetByStudentIdAsync(int studentId)
         {
             return await _context.StudentCourses
@@ -32,13 +30,11 @@ namespace StudentManagement.DataAccess.Repositories
                 .Where(sc => sc.StudentId == studentId)
                 .ToListAsync();
         }
-
         public async Task<StudentCourse?> GetByStudentAndCourseAsync(int studentId, int courseId)
         {
             return await _context.StudentCourses
                 .FirstOrDefaultAsync(sc => sc.StudentId == studentId && sc.CourseId == courseId);
         }
-
         public async Task DeleteAsync(StudentCourse studentCourse)
         {
             _context.StudentCourses.Remove(studentCourse);

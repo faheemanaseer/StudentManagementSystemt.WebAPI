@@ -18,14 +18,10 @@ namespace StudentManagement.DataAccess.Repositories
         {
             _context = context;
         }
-
         public async Task<List<Course>> GetAllAsync()
             => await _context.Courses.ToListAsync();
-
         public async Task<Course> GetByIdAsync(int id)
             => await _context.Courses.FindAsync(id);
-
-
         public async Task AddAsync(Course course)
         {
             if (course.Instructor != null && string.IsNullOrEmpty(course.Instructor.Email))
@@ -33,18 +29,14 @@ namespace StudentManagement.DataAccess.Repositories
 
                 course.Instructor = null;
             }
-
             _context.Courses.Add(course);
             await _context.SaveChangesAsync();
         }
-
-
         public async Task UpdateAsync(Course course)
         {
             _context.Courses.Update(course);
             await _context.SaveChangesAsync();
         }
-
         public async Task DeleteAsync(Course course)
         {
             _context.Courses.Remove(course);
@@ -56,6 +48,5 @@ namespace StudentManagement.DataAccess.Repositories
                 .Include(c => c.Instructor)
                 .ToListAsync();
         }
-
     }
 }

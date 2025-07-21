@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StudentManagement.Application.Entities;
 using StudentManagement.Business.Interfaces;
+using StudentManagement.Business.DTOs;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace StudentManagement.WebApi.Controllers
 {
@@ -10,16 +12,19 @@ namespace StudentManagement.WebApi.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly IMapper _mapper;
 
-        public UsersController(IUserService userService)
+        public UsersController(IUserService userService,IMapper mapper)
         {
             _userService = userService;
+            _mapper = mapper;
         }
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] User user)
+        public async Task<IActionResult> Register([FromBody] RegisterDto dto)
         {
             try
             {
+                var user = _mapper.Map<User>(dto); 
                 await _userService.RegisterAsync(user);
                 return Ok(new { message = "User registered successfully." });
             }
@@ -28,9 +33,6 @@ namespace StudentManagement.WebApi.Controllers
                 return BadRequest(new { error = ex.Message });
             }
         }
-        
-
-
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest model)
         {
@@ -41,27 +43,6 @@ namespace StudentManagement.WebApi.Controllers
 
             return Ok(new { token });
         }
-
-       // [HttpGet("role/{id}")]
-       // public async Task<IActionResult> GetRoleName(int id)
-       // {
-       //     var roleName = await _userService.GetRoleNameByIdAsync(id);
-       //     if (roleName == null)
-       //         return NotFound(new { message = "Role not found." });
-
-       //     return Ok(new { role = roleName });
-       // }
-
-
-       //[HttpGet("email/{email}")]
-       // public async Task<IActionResult> GetByEmail(string email)
-       // {
-       //     var user = await _userService.GetByEmailAsync(email);
-       //     if (user == null)
-       //         return NotFound(new { message = "User not found." });
-
-       //     return Ok(user);
-       // }
     }
     public class LoginRequest
     {

@@ -18,36 +18,27 @@ namespace StudentManagement.DataAccess.Repositories
     {
         private readonly ApplicationDbContext _context;
         private readonly IConfiguration _configuration;
-
         public StudentRepository(ApplicationDbContext context, IConfiguration configuration)
         {
             _context = context;
             _configuration = configuration;
         }
-
         private IDbConnection Connection => new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-
-        
-
         public async Task<Student> GetByUserIdAsync(int userId)
         {
             return await _context.Students
                 .Include(s => s.StudentCourses)
-                    .ThenInclude(sc => sc.Course)
+                .ThenInclude(sc => sc.Course)
                 .FirstOrDefaultAsync(s => s.UserId == userId);
         }
-
-
         public async Task CreateAsync(Student student)
         {
             await _context.Students.AddAsync(student);
         }
-
         public async Task UpdateAsync(Student student)
         {
             _context.Students.Update(student);
         }
-
         public async Task SaveAsync()
         {
             await _context.SaveChangesAsync();
@@ -74,7 +65,6 @@ namespace StudentManagement.DataAccess.Repositories
 
             return result.ToList();
         }
-
         public async Task<List<Student>> GetAllAsync()
         {
             using var db = Connection;
@@ -95,7 +85,5 @@ namespace StudentManagement.DataAccess.Repositories
                 .Select(sc => sc.Course)
                 .ToListAsync();
         }
-
     }
-
 }

@@ -12,13 +12,10 @@ namespace StudentManagement.WebApi.Controllers
     public class AttendanceController : ControllerBase
     {
         private readonly IAttendanceeService _attendanceService;
-
         public AttendanceController(IAttendanceeService attendanceService)
         {
             _attendanceService = attendanceService;
         }
-
-       
         [HttpGet]
         public async Task<IActionResult> GetAttendance([FromQuery] int courseId, [FromQuery] DateTime? date)
         {
@@ -28,8 +25,6 @@ namespace StudentManagement.WebApi.Controllers
             var result = await _attendanceService.GetAttendanceAsync(courseId, date.Value);
             return Ok(result);
         }
-
-       
         [HttpPost("save")]
         public async Task<IActionResult> SaveAttendance([FromBody] List<AttendanceeDto> attendanceList, [FromQuery] DateTime date)
         {
