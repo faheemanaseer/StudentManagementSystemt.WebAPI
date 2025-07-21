@@ -19,6 +19,9 @@ namespace StudentManagement.Application.Entities
         public string Phone { get; set; }
         [Required, Range(1, 120, ErrorMessage = "Enter valid age")]
         public int Age { get; set; }
+
+        [Required(ErrorMessage ="Student Card Image is Required")]
+        public string? CardImagePath { get; set; }
         [ValidateNever]
         public ICollection<StudentCourse> StudentCourses { get; set; }
        

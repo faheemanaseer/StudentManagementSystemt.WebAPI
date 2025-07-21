@@ -16,9 +16,11 @@ namespace StudentManagement.Business.Mapping
            
             CreateMap<Student, StudentDto>()
                 .ForMember(dest => dest.EnrolledCourses,
-                    opt => opt.MapFrom(src => src.StudentCourses.Select(sc => sc.Course)));
+                    opt => opt.MapFrom(src => src.StudentCourses.Select(sc => sc.Course)))
+                .ForMember(dest => dest.CardImage, opt => opt.Ignore())
+                .ForMember(dest => dest.CardImagePath, opt => opt.MapFrom(src => src.CardImagePath));
 
-            
+
             CreateMap<StudentDto, Student>()
                 .ForMember(dest => dest.UId, opt => opt.Ignore())
                 .ForMember(dest => dest.Email, opt => opt.Ignore());
@@ -34,6 +36,13 @@ namespace StudentManagement.Business.Mapping
 
           
             CreateMap<StudentCourse, StudentCourse>().ReverseMap();
+
+
+            CreateMap<CreateExamResultDto, ExamResult>().ReverseMap();
+            CreateMap<ExamResult, ExamResultDto>()
+                .ForMember(dest => dest.StudentName, opt => opt.MapFrom(src => src.Student.Name))
+                .ForMember(dest => dest.CourseName, opt => opt.MapFrom(src => src.Course.Title))
+                .ReverseMap();
         }
     }
 
